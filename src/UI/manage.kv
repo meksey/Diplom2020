@@ -1,0 +1,26 @@
+<ManageScreen>:
+    name: 'manage'
+
+    GridLayout:
+        cols: 1
+        size_hint_y: 1
+        padding: dp(5)
+
+        MDLabel:
+            text: 'Вы сегодня уже проходили тестирование. Можете ознакомиться с рекомендациями'
+            size_hint_y: None
+
+        ScrollView:
+
+            canvas.before:
+                Color:
+                    rgb: 0.98, 0.94, 0.94
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            GridLayout:
+                id: grid
+                cols: 1
+                size_hint_y: None
+                height: self.minimum_height

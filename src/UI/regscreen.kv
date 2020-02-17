@@ -1,0 +1,66 @@
+<RegScreen>:
+    name: 'reg'
+
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'center'
+
+        BoxLayout:
+            orientation: 'vertical'
+            pos_hint: {'center_y': 0.7, 'center_x': 0.5}
+            size_hint: (0.8, None)
+            height: self.minimum_height
+            spacing: dp(10)
+            padding: dp(10)
+
+
+            canvas.before:
+                Color:
+                    rgb: 0.98, 0.94, 0.94
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDLabel:
+                size_hint_y: None
+                font_style: 'H6'
+                text: 'Вход в систему'
+                halign: 'center'
+
+            MDTextField:
+                id: user_email
+                hint_text: 'E-mail'
+                size_hint_x: 1
+
+            MDTextField:
+                id: user_pass
+                password: True
+                hint_text: 'Пароль'
+                size_hint_x: 1
+
+            MDTextField:
+                id: user_name
+                hint_text: 'Имя'
+                size_hint_x: 1
+
+            BoxLayout:
+                size_hint_y: None
+                height: dp(25)
+                size_hint_x: 0.5
+                pos_hint: {'left': 1}
+                spacing: dp(5)
+
+                CheckBox:
+                    size_hint_x: None
+                    width: self.height
+                    id: cb
+
+                MDLabel:
+                    text: 'Я доктор'
+
+            MDRectangleFlatButton:
+                text: 'Регистрация'
+                pos_hint: {'center_x': 0.5}
+
+                on_release:
+                    app.db.register_user(user_email.text, user_pass.text, user_name.text, cb.active)

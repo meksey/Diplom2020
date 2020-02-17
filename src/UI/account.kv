@@ -1,0 +1,110 @@
+<AccountScreen>:
+    name: 'account'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            size_hint_y: None
+            orientation: 'vertical'
+            height: self.minimum_height
+
+            canvas.before:
+                Color:
+                    rgb: 0.98, 0.94, 0.94
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDTextField:
+                name: 'surname'
+                hint_text: 'Фамилия'
+                text: root.user_surname
+                on_text:
+                    if self.text != '': \
+                    root.update_data(self.name, self.text)
+
+            MDTextField:
+                name: 'name'
+                hint_text: 'Имя'
+                text: root.user_name
+                disabled: True
+                on_text:
+                    if self.text != '': \
+                    root.update_data(self.name, self.text)
+
+            MDTextField:
+                name: 'patronymic'
+                hint_text: 'Отчество'
+                text: root.user_patronymic
+                on_text:
+                    if self.text != '': \
+                    root.update_data(self.name, self.text)
+
+        ScrollView:
+
+            MDList:
+                height: self.minimum_height
+
+                MDLabel:
+                    text: 'Личные данные'
+                    size_hint_y: None
+
+                MDTextField:
+                    name: 'email'
+                    readonly: True
+                    hint_text: 'E-mail'
+                    text: root.email
+                    on_text:
+                        if self.text != '': \
+                        root.update_data(self.name, self.text)
+
+                MDTextField:
+                    name: 'vk'
+                    hint_text: 'Ссылка на ВК'
+                    text: root.vk_link
+                    on_text:
+                        if self.text != '': \
+                        root.update_data(self.name, self.text)
+
+                MDTextField:
+                    hint_text: 'Ссылка на Telegram'
+                    name: 'telegram'
+                    text: root.telegram_link
+                    on_text:
+                        if self.text != '': \
+                        root.update_data(self.name, self.text)
+
+                MDLabel:
+                    size_hint_y: None
+                    text: 'Адресные данные'
+
+                MDTextField:
+                    hint_text: 'Страна'
+                    name: 'country'
+                    text: root.country
+                    on_text:
+                        if self.text != '': \
+                        root.update_data(self.name, self.text)
+
+                MDTextField:
+                    hint_text: 'Город'
+                    name: 'city'
+                    text: root.city
+                    on_text:
+                        if self.text != '': \
+                        root.update_data(self.name, self.text)
+
+                MDTextField:
+                    hint_text: 'Поликлиника'
+                    name: 'med'
+                    text: root.med
+                    on_text:
+                        if self.text != '': \
+                        root.update_data(self.name, self.text)
+
+        MDRaisedButton:
+            size_hint_y: None
+            text: 'Обновить'
+            on_release:
+                root.do_update()

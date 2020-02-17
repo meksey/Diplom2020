@@ -1,0 +1,62 @@
+#:import EmptyScreen Screens.empty_screen.EmptyScreen
+#:import TestingScreen Screens.testing_screen.TestingScreen
+#:import AccountScreen Screens.account.AccountScreen
+#:import ManageScreen Screens.manage.ManageScreen
+
+
+<MainScreen>:
+    name: 'main'
+
+    NavigationLayout:
+        id: nav_lay
+
+        MDNavigationDrawer:
+            drawer_logo: 'data/avatars/male.png'
+            drawer_logo_allow_stretch: False
+            drawer_logo_keep_ratio: True
+
+            NavigationDrawerIconButton:
+                icon: 'home'
+                text: 'Главная страница'
+                on_release:
+                    main_sm.current = 'testing'
+
+            NavigationDrawerIconButton:
+                icon: 'account'
+                text: 'Мой аккаунт'
+                on_release:
+                    main_sm.current = 'account'
+
+            NavigationDrawerIconButton:
+                icon: 'account-card-details'
+                text: 'Медицинская карта'
+
+            NavigationDrawerIconButton:
+                icon: 'settings'
+                text: 'Настройки'
+
+            NavigationDrawerIconButton:
+                icon: 'door'
+                text: 'Выйти'
+                on_release:
+                    app.db.sign_out()
+
+        BoxLayout:
+            orientation: 'vertical'
+
+            MDToolbar:
+                id: toolbar
+                title: root.toolbar_title
+                left_action_items: [['menu', lambda x: nav_lay.toggle_nav_drawer()]]
+                md_bg_color: app.theme_cls.primary_color
+
+            ScreenManager:
+                id: main_sm
+
+                EmptyScreen:
+
+                TestingScreen:
+
+                AccountScreen:
+
+                ManageScreen:

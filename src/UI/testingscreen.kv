@@ -1,0 +1,81 @@
+<TestingScreen>:
+    name: 'testing'
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: dp(5)
+
+        MDLabel:
+            text: 'Ответьте на несколько вопросов'
+            size_hint_y: None
+            halign: 'center'
+
+        BoxLayout:
+            size_hint_y: None
+            height: dp(10)
+
+            MDProgressBar:
+                id: progress_bar
+                value: root.q_current
+                max: root.q_count
+                min: 0
+
+        ScrollView:
+
+            GridLayout:
+                id: grid
+                cols: 1
+                size_hint: (1, None)
+                height: self.minimum_height
+
+        MDRaisedButton:
+            id: done_btn
+            text: "Завершить"
+            disabled: True
+            pos_hint: {'center_x': 0.5}
+            on_release: root.save()
+
+
+<QuestionCard>:
+    orientation: 'vertical'
+    height: self.minimum_height
+    size_hint_y: None
+    padding: dp(10)
+
+    MDLabel:
+        text: root.text
+        size_hint_y: None
+        height: dp(30)
+
+    BoxLayout:
+        id: answers_vars
+        spacing: dp(5)
+        size_hint_y: None
+        height: self.minimum_height
+        orientation: 'vertical'
+
+
+<QuestionRow>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: dp(30)
+
+    canvas.before:
+        Color:
+            rgb: 0.98, 0.94, 0.94
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    MDLabel:
+        size_hint_x: 0.1
+        text: str(root.question_number)
+
+    MDLabel:
+        size_hint_x: 0.8
+        text: root.text
+
+    MDCheckbox:
+        id: question_check
+        size_hint_x: 0.1
+        group: root.checkbox_group
