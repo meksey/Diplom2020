@@ -15,7 +15,7 @@ class ManageScreen(Screen):
 		for key, value in recs.items():
 			self.ids.grid.add_widget(RecommendationCard(category=key, variants=value))
 			self.ids.grid.add_widget(RecommendationCard(category=key, variants=value))
-			self.ids.grid.add_widget(RecommendationCard(category=key, variants=value))
+
 
 
 

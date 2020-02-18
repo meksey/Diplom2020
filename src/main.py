@@ -23,9 +23,6 @@ class IDocApp(MDApp):
 	logged = None
 	sm = None
 
-
-	email = None
-
 	def build(self):
 		self.db = DataBase()
 		self.logged = False

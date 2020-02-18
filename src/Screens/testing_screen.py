@@ -46,7 +46,7 @@ class TestingScreen(Screen):
 		self.answers.update({question: answer})
 
 	def save(self):
-		print('Результаты сохранены')
+		print(self.answers)
 		app_instance = MDApp.get_running_app()
 		app_instance.db.patch_daily_testing(app_instance.local_id, app_instance.id_token, {})
 
