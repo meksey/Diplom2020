@@ -9,6 +9,7 @@
         MDLabel:
             text: 'Вы сегодня уже проходили тестирование. Можете ознакомиться с рекомендациями'
             size_hint_y: None
+            halign: 'center'
 
         ScrollView:
 
@@ -24,3 +25,33 @@
                 cols: 1
                 size_hint_y: None
                 height: self.minimum_height
+
+
+<RecommendationCard>:
+    orientation: 'vertical'
+    height: self.minimum_height
+    size_hint_y: None
+
+    MDLabel:
+        text: root.category
+        size_hint_y: None
+        height: dp(50)
+        font_style: 'H6'
+
+    BoxLayout:
+        id: rec_list
+        orientation: 'vertical'
+        size_hint_y: None
+        height: self.minimum_height
+
+<RecommendationRow>:
+    size_hint_y: None
+    height: dp(40)
+
+    MDIcon:
+        size_hint_x: None
+        width: self.height
+        icon: 'check'
+
+    MDLabel:
+        text: root.variant
