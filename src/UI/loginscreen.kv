@@ -1,53 +1,61 @@
 <LoginScreen>:
     name: 'login'
 
-    AnchorLayout:
-        anchor_x: 'center'
-        anchor_y: 'center'
+    FloatLayout:
 
-        BoxLayout:
-            orientation: 'vertical'
-            pos_hint: {'center_y': 0.7, 'center_x': 0.5}
-            size_hint: (0.8, None)
-            height: self.minimum_height
-            spacing: dp(10)
-            padding: dp(10)
+        MDIconButton:
+            pos_hint: {'x': 0, 'top': 1}
+            icon: 'arrow-left'
+
+            on_release: root.manager.current = 'hello'
+
+        AnchorLayout:
+            anchor_x: 'center'
+            anchor_y: 'center'
+
+            BoxLayout:
+                orientation: 'vertical'
+                pos_hint: {'center_y': 0.7, 'center_x': 0.5}
+                size_hint: (0.8, None)
+                height: self.minimum_height
+                spacing: dp(10)
+                padding: dp(10)
 
 
-            canvas.before:
-                Color:
-                    rgb: 0.98, 0.94, 0.94
-                Rectangle:
-                    pos: self.pos
-                    size: self.size
+                canvas.before:
+                    Color:
+                        rgb: 0.98, 0.94, 0.94
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
 
-            MDLabel:
-                size_hint_y: None
-                font_style: 'H6'
-                text: 'Вход в систему'
-                halign: 'center'
+                MDLabel:
+                    size_hint_y: None
+                    font_style: 'H6'
+                    text: 'Вход в систему'
+                    halign: 'center'
 
-            MDTextField:
-                id: user_email
-                hint_text: 'E-mail'
-                size_hint_x: 1
+                MDTextField:
+                    id: user_email
+                    hint_text: 'E-mail'
+                    size_hint_x: 1
 
-            MDTextField:
-                id: user_pass
-                password: True
-                hint_text: 'Пароль'
-                size_hint_x: 1
+                MDTextField:
+                    id: user_pass
+                    password: True
+                    hint_text: 'Пароль'
+                    size_hint_x: 1
 
-            MDRectangleFlatButton:
-                text: 'Вход'
-                pos_hint: {'center_x': 0.5}
+                MDRectangleFlatButton:
+                    text: 'Вход'
+                    pos_hint: {'center_x': 0.5}
 
-                on_release:
-                    app.db.login(user_email.text, user_pass.text)
+                    on_release:
+                        app.db.login(user_email.text, user_pass.text)
 
-            MDTextButton:
-                text: 'Восстановить пароль'
-                pos_hint: {'center_x': 0.5}
+                MDTextButton:
+                    text: 'Восстановить пароль'
+                    pos_hint: {'center_x': 0.5}
 
-                on_release:
-                    app.db.send_reset_password_key(user_email.text)
+                    on_release:
+                        app.db.send_reset_password_key(user_email.text)
