@@ -151,7 +151,6 @@ class DataBase:
 		else:
 			return 0
 
-
 	# Возвращает полную информацию о пользователе
 	def get_user_data_all(self, local_id, id_token, old_data):
 		user_data = {}
@@ -187,6 +186,7 @@ class DataBase:
 		if request.ok and user_testing:
 			user_data = {**user_data, **user_testing}
 
+		print("User Data: \n{}".format(user_data))
 		return user_data
 
 
@@ -214,11 +214,28 @@ class DataBase:
 		else:
 			return 0
 
+	def patch_new_testing_data(self, local_id, id_token, data, timestamp):
+		to_upload = json.dumps(data)
+		request = requests.patch(self.url + 'users/' + local_id + '/testing/data/' + str(timestamp) + '/.json?auth=' + id_token, data=to_upload)
+		if request.ok:
+			return 1
+		else:
+			return 0
+
+	# Сохранить данные о тестировании в БД
 	def patch_daily_testing(self, local_id, id_token, data):
-		data = json.dumps(data)
+
 		timestamp = int(datetime.today().timestamp())
-		self.patch_last_testing_time(local_id, id_token, timestamp)
-		self.get_last_testing_time(local_id, id_token)
+
+		# Записываем данные о новом тестировании
+		if not self.patch_new_testing_data(local_id, id_token, data, timestamp):
+			return 0
+
+		# Записываем данные о последнем тестировании
+		if not self.patch_last_testing_time(local_id, id_token, timestamp):
+			return 0
+
+		return timestamp
 
 
 

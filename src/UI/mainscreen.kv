@@ -18,7 +18,7 @@
                 icon: 'home'
                 text: 'Главная страница'
                 on_release:
-                    main_sm.current = 'manage' if root.is_test_yet else 'testing'
+                    main_sm.current = 'manage' if root.is_test_yet() else 'testing'
 
             NavigationDrawerIconButton:
                 icon: 'account'

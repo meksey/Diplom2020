@@ -2,16 +2,19 @@ from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty, NumericProperty, DictProperty, StringProperty, ListProperty
 from kivymd.app import MDApp
 from kivy.core.window import Window
+from kivymd.uix.snackbar import Snackbar
 from kivy.uix.boxlayout import BoxLayout
 
 
 class TestingScreen(Screen):
+
+	# questions[0] - Вопрос
+	# questions[1] - Варианты ответа
 	questions = {
-		'Вы употребляли вчера алкоголь?': ['Да, крепкий алкоголь', 'Да, слабоалкогольные напитки', 'Нет'],
-		'Сколько вы спали прошлой ночью?': ['1-5 часов', '6-8 часов', '9-12 часов'],
-		'Сколько раз за день вы поели?': ['1 раз', '2-3 раза', 'Больше 3 раз'],
-		'У вас вчера болела голова?': ['Да', 'Да, но не сильно', 'Нет'],
-		'У вас голова?': ['Да', 'Да, но не сильно', 'Нет', 'Нет, но не сильно'],
+		11: ['Вы употребляли вчера алкоголь?', {'A': 'Да, крепкий алкоголь', 'B': 'Да, слабоалкогольные напитки', 'C': 'Нет'}],
+		12: ['Сколько вы спали прошлой ночью?', {'A': '1-5 часов', 'B': '6-8 часов', 'C': '9-12 часов'}],
+		13: ['Сколько раз за день вы поели?', {'A': '1 раз', 'B': '2-3 раза', 'C': 'Больше 3 раз'}],
+		14: ['У вас вчера болела голова?', {'A': 'Да', 'B': 'Да, но не сильно', 'C': 'Нет'}],
 	}
 
 	q_current = NumericProperty()
@@ -22,16 +25,16 @@ class TestingScreen(Screen):
 		self.q_count = len(self.questions)
 		self.q_current = 0
 
-		for q, a in self.questions.items():
-			card = QuestionCard(text=q, testing_screen=self)
+		for question_num, question in self.questions.items():
+			card = QuestionCard(text=question[0], testing_screen=self, number=question_num)
 			i = 1
-			for variant in a:
+			for num, variant in question[1].items():
 				card.add_height()
 				card.ids.answers_vars.add_widget(QuestionRow(
-					question_number=1,
+					question_number=num,
 					text=variant,
 					question_card=card,
-					checkbox_group=q,
+					checkbox_group=question[0],
 				))
 				i += 1
 			i = 0
@@ -42,13 +45,19 @@ class TestingScreen(Screen):
 		if self.q_current == self.q_count:
 			self.ids.done_btn.disabled = False
 
-	def update_answers(self, question, answer):
-		self.answers.update({question: answer})
+	def update_answers(self, question_number, answer_variant):
+		self.answers.update({question_number: answer_variant})
 
 	def save(self):
-		print(self.answers)
 		app_instance = MDApp.get_running_app()
-		app_instance.db.patch_daily_testing(app_instance.local_id, app_instance.id_token, {})
+		res = app_instance.db.patch_daily_testing(app_instance.local_id, app_instance.id_token, self.answers)
+
+		if not res:
+			Snackbar(text='Не удалось записать тестирование на сервер').show()
+		else:
+			self.manager.current = 'manage'
+			app_instance.user_data = {**app_instance.user_data, **{'lastTestingTime': res}}
+			Snackbar(text='Данные успешно записаны').show()
 
 	def on_leave(self, *args):
 		self.ids.grid.clear_widgets()
@@ -59,20 +68,21 @@ class TestingScreen(Screen):
 
 
 class QuestionCard(BoxLayout):
+	number = NumericProperty()
 	text = StringProperty()
 	card_height = NumericProperty(10)
 	selected_answer = StringProperty()
 	testing_screen = ObjectProperty()
 
 	def on_selected_answer(self, obj, value):
-		self.testing_screen.update_answers(self.text, self.selected_answer)
+		self.testing_screen.update_answers(self.number, self.selected_answer)
 
 	def add_height(self):
 		self.card_height = self.card_height + 50
 
 
 class QuestionRow(BoxLayout):
-	question_number = NumericProperty()
+	question_number = StringProperty()
 	text = StringProperty()
 	checkbox_group = StringProperty()
 	question_card = ObjectProperty()
@@ -84,4 +94,4 @@ class QuestionRow(BoxLayout):
 
 	def on_checkbox_active(self, checkbox, value):
 		if value:
-			self.question_card.selected_answer = self.text
+			self.question_card.selected_answer = self.question_number
