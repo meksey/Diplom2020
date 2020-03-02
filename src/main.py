@@ -7,8 +7,6 @@ from Screens.start_screen import StartScreen
 from Screens.main_screen import MainScreen
 from kivymd.uix.snackbar import Snackbar
 from BL.utils import read_refresh_token
-from kivy.clock import Clock
-import threading
 
 
 class IDocApp(MDApp):
@@ -22,6 +20,11 @@ class IDocApp(MDApp):
 	db = None
 	logged = None
 	sm = None
+
+	def __init__(self, **kwargs):
+		super().__init__(**kwargs)
+		self.theme_cls.primary_palette = "Teal"
+		self.theme_cls.accent_palette = 'Cyan'
 
 	def build(self):
 		self.db = DataBase()

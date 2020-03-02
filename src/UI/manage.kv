@@ -4,12 +4,41 @@
     GridLayout:
         cols: 1
         size_hint_y: 1
-        padding: dp(5)
+        padding: dp(14)
 
         MDLabel:
             text: 'Вы сегодня уже проходили тестирование. Можете ознакомиться с рекомендациями'
             size_hint_y: None
+            font_style: 'H6'
+            height: dp(70)
             halign: 'center'
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: self.minimum_height
+            padding: dp(8)
+
+            canvas.before:
+                Color:
+                    rgb: 0.98, 0.94, 0.94
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            MDLabel:
+                text: root.last_testing_time
+                size_hint_y: None
+                height: dp(35)
+
+            MDRectangleFlatButton:
+                text: 'Посмотреть'
+                size_hint_y: None
+                height: dp(35)
+                size_hint_x: None
+
+                on_release:
+                    root.manager.current = 'test_view'
 
         ScrollView:
 
@@ -55,3 +84,4 @@
 
     MDLabel:
         text: root.variant
+

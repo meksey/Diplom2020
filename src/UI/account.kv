@@ -3,11 +3,14 @@
 
     BoxLayout:
         orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
 
         BoxLayout:
             size_hint_y: None
             orientation: 'vertical'
             height: self.minimum_height
+            padding: dp(10)
 
             canvas.before:
                 Color:
@@ -44,11 +47,20 @@
         ScrollView:
 
             MDList:
+                canvas.before:
+                    Color:
+                        rgb: 0.98, 0.94, 0.94
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
                 height: self.minimum_height
+                padding: dp(10)
 
                 MDLabel:
                     text: 'Личные данные'
                     size_hint_y: None
+                    height: self.texture_size[1] + dp(15)
+                    font_style: 'H6'
 
                 MDTextField:
                     name: 'email'
@@ -78,6 +90,8 @@
                 MDLabel:
                     size_hint_y: None
                     text: 'Адресные данные'
+                    height: self.texture_size[1] + dp(15)
+                    font_style: 'H6'
 
                 MDTextField:
                     hint_text: 'Страна'
@@ -103,7 +117,7 @@
                         if self.text != '': \
                         root.update_data(self.name, self.text)
 
-        MDRaisedButton:
+        MDRectangleFlatButton:
             size_hint_y: None
             text: 'Обновить'
             pos_hint: {'center_x': 0.5}

@@ -1,9 +1,9 @@
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty, NumericProperty, DictProperty, StringProperty, ListProperty
 from kivymd.app import MDApp
-from kivy.core.window import Window
 from kivymd.uix.snackbar import Snackbar
 from kivy.uix.boxlayout import BoxLayout
+from datetime import datetime
 
 
 class TestingScreen(Screen):
@@ -51,6 +51,13 @@ class TestingScreen(Screen):
 	def save(self):
 		app_instance = MDApp.get_running_app()
 		res = app_instance.db.patch_daily_testing(app_instance.local_id, app_instance.id_token, self.answers)
+
+		if 'data' in app_instance.user_data:
+			new_data = {**app_instance.user_data['data'], **{str(int(datetime.today().timestamp())): self.answers}}
+		else:
+			new_data = {int(datetime.today().timestamp()): self.answers}
+
+		app_instance.user_data['data'] = new_data
 
 		if not res:
 			Snackbar(text='Не удалось записать тестирование на сервер').show()

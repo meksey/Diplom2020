@@ -1,0 +1,58 @@
+<TestingView>:
+    name: 'test_view'
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+
+        MDLabel:
+            size_hint_y: None
+            height: dp(45)
+            text: 'Результаты последних тестирований'
+            font_style: 'H6'
+
+        ScrollView:
+
+            GridLayout:
+                size_hint_y: None
+                height: self.minimum_height
+                id: testings_grid
+                cols: 1
+                spacing: dp(10)
+
+
+<TestingViewCard>:
+    canvas.before:
+        Color:
+            rgb: 0.98, 0.94, 0.94
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    orientation: 'vertical'
+    size_hint_y: None
+    height: self.minimum_height
+    padding: dp(15)
+    spacing: dp(10)
+
+    MDTextField:
+        text: root.date
+        disabled: True
+        color_mode: 'accent'
+        hint_text: 'Дата тестирования'
+
+    GridLayout:
+        id: answers
+        cols: 1
+        size_hint_y: None
+        height: self.minimum_height
+
+<TestingViewRow>:
+    orientation: 'horizontal'
+    size_hint_y: None
+    height: self.minimum_height
+
+    MDTextField:
+        font_size: sp(15)
+        disabled: True
+        text: root.answer
+        hint_text: root.question
