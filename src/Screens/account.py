@@ -50,9 +50,14 @@ class AccountScreen(Screen):
 		self.new_user[field] = value
 
 	def do_update(self):
-		set_old = set(self.current_user.items())
+		temp_user_data = self.current_user.copy()
+		if 'data' in temp_user_data:
+			del temp_user_data['data']
+
+		set_old = set(temp_user_data.items())
 		set_new = set(self.new_user.items())
 		update_dict = dict(set_new - set_old)
+
 		if not update_dict:
 			print('Ни одного значения не изменнено')
 			return

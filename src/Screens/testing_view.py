@@ -8,6 +8,7 @@ from BL.utils import convert_timestamp_to_datetime
 class TestingView(Screen):
 
 	def on_enter(self, *args):
+		print(MDApp.get_running_app().user_data)
 		user_testings = MDApp.get_running_app().user_data['data']
 
 		print(user_testings)

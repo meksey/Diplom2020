@@ -7,6 +7,7 @@ from Screens.start_screen import StartScreen
 from Screens.main_screen import MainScreen
 from kivymd.uix.snackbar import Snackbar
 from BL.utils import read_refresh_token
+from kivy.utils import platform
 
 
 class IDocApp(MDApp):
