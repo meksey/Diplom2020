@@ -98,6 +98,7 @@ class DataBase:
 		tokens = self.exchange_refresh_token(refresh_token=refresh_token)
 
 		if not tokens:
+			Snackbar(text='Не удалось подключиться к сети').show()
 			return 0
 
 		# Если удалось восстановить токены
@@ -118,9 +119,9 @@ class DataBase:
 	def sign_out(self):
 		app_instance = MDApp.get_running_app()
 		write_refresh_token('none')
-		app_instance.local_id = None
-		app_instance.id_token = None
-		app_instance.user_data = None
+		app_instance.local_id = ''
+		app_instance.id_token = ''
+		app_instance.user_data = {}
 		app_instance.sm.current = 'start'
 
 	def send_reset_password_key(self, email):
@@ -251,7 +252,11 @@ class DataBase:
 	def exchange_refresh_token(self, refresh_token):
 		url = "https://securetoken.googleapis.com/v1/token?key=" + self.auth_key
 		payload = json.dumps({"grant_type": "refresh_token", "refresh_token": str(refresh_token)})
-		request = requests.post(url, data=payload)
+		try:
+			request = requests.post(url, data=payload)
+		except Exception as e:
+			print(e)
+			return 0
 
 		if not request.ok:
 			return 0
