@@ -8,10 +8,7 @@ from BL.utils import convert_timestamp_to_datetime
 class TestingView(Screen):
 
 	def on_enter(self, *args):
-		print(MDApp.get_running_app().user_data)
 		user_testings = MDApp.get_running_app().user_data['data']
-
-		print(user_testings)
 
 		for date, answers in sorted(user_testings.items(), reverse=True, key=lambda item: item[0]):
 			date_obj = convert_timestamp_to_datetime(date)

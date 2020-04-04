@@ -111,7 +111,6 @@ class DataBase:
 
 		if not user_data:
 			return 0
-
 		app_instance.user_data = user_data
 		return 1
 
@@ -189,10 +188,6 @@ class DataBase:
 
 		print("User Data: \n{}".format(user_data))
 		return user_data
-
-
-
-
 
 
 

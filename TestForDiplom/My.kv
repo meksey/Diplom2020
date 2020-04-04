@@ -1,0 +1,46 @@
+<TestScreen>:
+    name: 'test_screen'
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDLabel:
+            text: 'patients List'
+            size_hint_y: None
+            height: dp(30)
+            font_style: 'H6'
+
+        ScrollView:
+            GridLayout:
+                padding: dp(8)
+                spacing: dp(5)
+                size_hint_y: None
+                height: self.minimum_height
+                cols: 1
+                spacing: dp(10)
+
+                PatientCard:
+
+                PatientCard:
+
+                PatientCard:
+
+
+
+<PatientCard@BoxLayout>:
+    size_hint_y: None
+    height: self.minimum_height
+    orientation: 'vertical'
+
+
+    MDTextField:
+        hint_text: 'ФИО'
+        text: 'Малюгин Алексей Владимирович'
+
+    MDTextField:
+        hint_text: 'Дата рождения'
+        text: 'Малюгин Алексей Владимирович'
+
+
+
+

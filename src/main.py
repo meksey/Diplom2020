@@ -7,7 +7,6 @@ from Screens.start_screen import StartScreen
 from Screens.main_screen import MainScreen
 from kivymd.uix.snackbar import Snackbar
 from BL.utils import read_refresh_token
-from kivy.utils import platform
 
 
 class IDocApp(MDApp):
@@ -40,7 +39,6 @@ class IDocApp(MDApp):
 			self.logged = True
 		else:
 			Snackbar(text='Не удалось подгрузить данные').show()
-
 		self.load_kv_from_dir('{}/UI'.format(self.directory))
 		self.sm.add_widget(MainScreen())
 		self.sm.add_widget(StartScreen())

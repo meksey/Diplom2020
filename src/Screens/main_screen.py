@@ -7,10 +7,9 @@ from kivymd.uix.navigationdrawer import NavigationDrawerIconButton
 
 
 class MainScreen(Screen):
-	toolbar_title = StringProperty('Привет')
+	toolbar_title = StringProperty('')
 
 	def on_enter(self, *args):
-
 		app_instance = MDApp.get_running_app()
 		self.ids.main_sm.current = 'manage' if self.is_test_yet() else 'testing'
 

@@ -2,6 +2,7 @@
 #:import AccountScreen Screens.account.AccountScreen
 #:import ManageScreen Screens.manage.ManageScreen
 #:import TestingView Screens.testing_view.TestingView
+#:import MedCardScreen Screens.med_card.MedCardScreen
 
 <MainScreen>:
     name: 'main'
@@ -19,20 +20,26 @@
                 text: 'Главная страница'
                 on_release:
                     main_sm.current = 'manage' if root.is_test_yet() else 'testing'
+                    toolbar.title = 'Главная' if root.is_test_yet() else 'Тестирование'
 
             NavigationDrawerIconButton:
                 icon: 'account'
                 text: 'Мой аккаунт'
                 on_release:
                     main_sm.current = 'account'
+                    toolbar.title = 'Аккаунт'
 
             NavigationDrawerIconButton:
                 icon: 'account-card-details'
                 text: 'Медицинская карта'
+                on_release:
+                    main_sm.current = 'med_card'
+                    toolbar.title = 'Медицинская карта'
 
             NavigationDrawerIconButton:
                 icon: 'settings'
                 text: 'Настройки'
+
 
             NavigationDrawerIconButton:
                 icon: 'door'
@@ -60,3 +67,4 @@
 
                 TestingView:
 
+                MedCardScreen:

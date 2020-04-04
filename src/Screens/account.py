@@ -19,13 +19,15 @@ class AccountScreen(Screen):
 
 	app_instance = MDApp.get_running_app()
 
-	current_user = {}
+	current_user = {}       # Копия словаря пользователя
 	new_user = {}
 
 	thread = None
 
 	def on_enter(self, *args):
-		self.current_user = self.app_instance.user_data
+		self.current_user = self.app_instance.user_data.copy()
+		if 'data' in self.current_user:
+			del self.current_user['data']
 
 		if 'email' in self.current_user:
 			self.email = self.current_user['email']
@@ -50,11 +52,8 @@ class AccountScreen(Screen):
 		self.new_user[field] = value
 
 	def do_update(self):
-		temp_user_data = self.current_user.copy()
-		if 'data' in temp_user_data:
-			del temp_user_data['data']
 
-		set_old = set(temp_user_data.items())
+		set_old = set(self.current_user.items())
 		set_new = set(self.new_user.items())
 		update_dict = dict(set_new - set_old)
 
