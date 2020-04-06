@@ -50,7 +50,7 @@ class TestingScreen(Screen):
 
 	def save(self):
 		app_instance = MDApp.get_running_app()
-		res = app_instance.db.patch_daily_testing(app_instance.local_id, app_instance.id_token, self.answers)
+		res = app_instance.db.patch_daily_testing(self.answers)
 
 		if 'data' in app_instance.user_data:
 			new_data = {**app_instance.user_data['data'], **{str(int(datetime.today().timestamp())): self.answers}}

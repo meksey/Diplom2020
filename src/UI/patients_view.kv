@@ -1,0 +1,101 @@
+<PatientView>:
+    name: 'patients_view'
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: sp(10)
+        padding: dp(10)
+
+        BoxLayout:
+            canvas.before:
+                Color:
+                    rgba: 0.98, 0.94, 0.94, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            adaptive_size: True
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: self.minimum_height
+            spacing: dp(10)
+            padding: dp(10)
+
+            MDTextField:
+                id: tb_id_patient
+                hint_text: 'Введите ID пациента'
+
+            MDRectangleFlatButton:
+                pos_hint: {'center_y': 0.5}
+                text: 'Добавить пациента'
+                on_release: root.add_patient(tb_id_patient.text)
+
+        MDSeparator:
+
+        ScrollView:
+
+            GridLayout:
+                size_hint_y: None
+                height: self.minimum_height
+                id: grid
+                cols: 1
+                spacing: dp(10)
+
+
+<PatientCard>:
+    canvas.before:
+        Color:
+            rgba: 0.98, 0.94, 0.94, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    orientation: "vertical"
+    padding: dp(10), dp(10), dp(10), dp(10),
+    size_hint_y: None
+    height: self.minimum_height
+    spacing: dp(5)
+
+    MDLabel:
+        text: root.fio
+        theme_text_color: "Secondary"
+        size_hint_y: None
+        height: self.texture_size[1]
+
+    Widget:
+        size_hint_y: None
+        height: dp(5)
+        canvas.before:
+            Color:
+                rgba: 0.58, 0.96, 0.52, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+    Widget:
+        size_hint_y: None
+        height: dp(7)
+
+    MDTextField:
+        size_hint_y: None
+        text: 'Все параметры в норме'
+        hint_text: 'Отклонения состояния пациента от нормы'
+
+    BoxLayout:
+        adaptive_size: True
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: self.minimum_height
+        spacing: dp(5)
+
+        MDIconButton:
+            icon: 'telegram'
+
+        MDIconButton:
+            icon: 'email'
+
+        MDIconButton:
+            icon: 'delete'
+
+        MDTextButton:
+            pos_hint: {'center_y': 0.5}
+            text: 'Подробнее...'
+
+

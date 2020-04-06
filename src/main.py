@@ -62,3 +62,5 @@ class IDocApp(MDApp):
 directory = os.path.dirname(__file__)
 app = IDocApp()
 app.run()
+
+# TODO: добавить везде методы on_leave

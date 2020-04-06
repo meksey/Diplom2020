@@ -103,6 +103,7 @@ src/env
 src/.idea
 src/src.zip
 src/refresh_token.txt
+TestForDiplom/.idea
 .env
 .venv
 env/

@@ -3,6 +3,7 @@
 #:import ManageScreen Screens.manage.ManageScreen
 #:import TestingView Screens.testing_view.TestingView
 #:import MedCardScreen Screens.med_card.MedCardScreen
+#:import PatientView Screens.patients_view.PatientView
 
 <MainScreen>:
     name: 'main'
@@ -40,6 +41,12 @@
                 icon: 'settings'
                 text: 'Настройки'
 
+            NavigationDrawerIconButton:
+                icon: 'human-male-male'
+                text: 'Мои пациенты'
+                on_release:
+                    main_sm.current = 'patients_view'
+                    toolbar.title = 'Ваши пациенты'
 
             NavigationDrawerIconButton:
                 icon: 'door'
@@ -68,3 +75,5 @@
                 TestingView:
 
                 MedCardScreen:
+
+                PatientView:

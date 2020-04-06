@@ -64,7 +64,7 @@ class AccountScreen(Screen):
 		app = self.app_instance
 
 		# Запись изиенений в БД
-		to_upload = app.db.patch_account_data(app.local_id, app.id_token, update_dict)
+		to_upload = app.db.patch_account_data(update_dict)
 		if not to_upload:
 			Snackbar(text='Данные не удалось загрузить на сервер').show()
 			return 0
