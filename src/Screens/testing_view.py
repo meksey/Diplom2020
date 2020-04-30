@@ -16,6 +16,9 @@ class TestingView(Screen):
             card = TestingViewCard(date=date, answers=answers)
             self.ids.testings_grid.add_widget(card)
 
+    def on_leave(self, *args):
+        self.ids.testings_grid.clear_widgets()
+
 
 class TestingViewCard(BoxLayout):
     date = StringProperty('Неизвестно')

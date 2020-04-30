@@ -1,35 +1,56 @@
+from time import sleep
+from threading import Thread
+
 from kivymd.app import MDApp
-from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen
+from kivy.properties import NumericProperty
+from kivymd.uix.spinner import MDSpinner
 
 
-class TestScreen(Screen):
-	pass
+KV = r'''
+ScreenManager:
+    Screen:
+        name: 'start'
+        Button:
+            size_hint: .5, .5
+            pos_hint: {'center': (.5, .5)}
+            text: 'hit me!'
+            on_press: app.start_task()
+        
+        MDSpinner:
+            id: spinner
+            size_hint: None, None
+            size: dp(30), dp(30)
+
+        
+    Screen:
+        name: 'loading'
+        Label:
+            text: 'loading…\n' + '.' * (app.count % 15)
+    Screen:
+        name: 'done'
+        Label:
+            text: 'done!'
+'''
 
 
-class PatientCard:
-	pass
+class Application(MDApp):
+    count = NumericProperty()
 
+    def build(self):
+        return Builder.load_string(KV)
 
-class TestApp(MDApp):
-	sm = None
+    def start_task(self):
+        self.root.current = 'loading'
+        Thread(target=self._slow_task).start()
 
-	def __init__(self, **kwargs):
-		self.title = "MyApp"
-		self.theme_cls.primary_palette = "Blue"
-		super().__init__(**kwargs)
+    def _slow_task(self):
+        for i in range(10):
+            sleep(.3)
+            self.count += 1
 
-
-	def build(self):
-		with open('My.kv', encoding='utf8') as f:
-			Builder.load_string(f.read())
-		self.sm = ScreenManager()
-		self.sm.add_widget(TestScreen())
-		self.sm.current = 'test_screen'
-		return self.sm
-
+        self.root.current = 'done'
 
 
 if __name__ == "__main__":
-	TestApp().run()
+    Application().run()

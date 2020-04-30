@@ -160,21 +160,6 @@ class DataBase:
     def get_user_data_all(self, old_data):
         user_data = {}
 
-        # # Получаем email пользователя
-        # if 'email' not in old_data:
-        #     print("Загружаем данные об email")
-        #     url = "https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=" + self.auth_key
-        #     data = {'idToken': self.app_instance.id_token}
-        #     request = requests.post(url=url, data=data)
-        #
-        #     if not request.ok:
-        #         return 0
-        #
-        #     request_result = json.loads(request.content.decode())['users'][0]
-        #
-        #     # Заполняем общий словарь данных о пользователе если email еще не заполнен
-        #     user_data['email'] = request_result['email']
-
         # Далее получаем данные из БД об аккаунте пользователя
         print("Загружаем данные об аккаунте")
         request = requests.get(self.url + 'users/' + self.app_instance.local_id + '/account/' + '.json?auth=' + self.app_instance.id_token)
@@ -244,7 +229,7 @@ class DataBase:
             print('Не удалось найти такого пользователя')
             return 0
 
-        to_upload = json.dumps({patient_local_id: patient['name']})
+        to_upload = json.dumps({patient_local_id: patient})
         request = requests.patch(
             self.url + 'users/' + self.app_instance.local_id + '/patients_list/' + '/.json?auth=' + self.app_instance.id_token,
             data=to_upload
@@ -270,6 +255,8 @@ class DataBase:
 
         request = requests.get(self.url + 'users/' + self.app_instance.local_id + '/patients_list/' + '.json?auth=' + self.app_instance.id_token)
         result = json.loads(request.content.decode())
+        if not result:
+            return 0
 
         for key, value in result.items():
             request = requests.get(self.url + 'users/' + key + '/account/' + '.json?auth=' + self.app_instance.id_token)
